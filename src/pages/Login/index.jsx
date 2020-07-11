@@ -15,6 +15,7 @@ import {
   Input,
   Form,
   Alert,
+  ButtonGroup,
 } from "reactstrap";
 
 export default function Login({ history }) {
@@ -62,7 +63,7 @@ export default function Login({ history }) {
 
   return (
     <>
-      <NewUser></NewUser>
+      <NewUser modal={modal} toggleModal={toggleModal}></NewUser>
       <Container>
         <Card>
           <CardHeader>
@@ -96,12 +97,14 @@ export default function Login({ history }) {
                 />
               </FormGroup>
               <SubmitArea>
-                <Submit type="submit" onClick={login} color="warning">
-                  Entrar
-                </Submit>
-                <Submit type="button" onClick={toggleModal} color="secondary">
-                  Cadastrar
-                </Submit>
+                <ButtonGroup>
+                  <Submit type="submit" onClick={login} color="warning">
+                    Entrar
+                  </Submit>
+                  <Submit type="button" onClick={toggleModal} color="secondary">
+                    Cadastrar
+                  </Submit>
+                </ButtonGroup>
               </SubmitArea>
             </Form>
           </CardBody>

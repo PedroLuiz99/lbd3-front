@@ -7,18 +7,18 @@ import {
   Label,
   Input,
   Jumbotron,
-  ButtonGroup
+  ButtonGroup,
 } from "reactstrap";
 
 import { Container, Modal, FormClosed, FormOpenned } from "./styles";
 
 export default function NewPost({ onPostCreated }) {
   const [form, toggleForm] = useState(false);
-  const [author, changeAuthor] = useState(``);
-  const [title, changeTitle] = useState(``);
-  const [subTitle, changeSubTitle] = useState(``);
-  const [message, changeMessage] = useState(``);
-  const [avatar, changeAvatar] = useState(``);
+  const [author, changeAuthor] = useState("");
+  const [title, changeTitle] = useState("");
+  const [subTitle, changeSubTitle] = useState("");
+  const [message, changeMessage] = useState("");
+  const [avatar, changeAvatar] = useState("");
 
   const [invalid, setInvalid] = useState({
     postUrl: false,
@@ -26,7 +26,7 @@ export default function NewPost({ onPostCreated }) {
     title: false,
     createdAt: false,
     subTitle: false,
-    message: false
+    message: false,
   });
 
   useEffect(() => {
@@ -34,14 +34,14 @@ export default function NewPost({ onPostCreated }) {
   }, [form]);
 
   const reset = () => {
-    changeAuthor(``);
-    changeTitle(``);
-    changeSubTitle(``);
-    changeMessage(``);
-    changeAvatar(``);
+    changeAuthor("");
+    changeTitle("");
+    changeSubTitle("");
+    changeMessage("");
+    changeAvatar("");
   };
 
-  const createPost = e => {
+  const createPost = (e) => {
     let error = false;
 
     const newInvalids = { ...invalid };
@@ -81,13 +81,13 @@ export default function NewPost({ onPostCreated }) {
 
     onPostCreated({
       _id: id,
-      postUrl: "./post/" + id,
+      postUrl: `./post/${id}`,
       author,
       avatar,
       title,
       createdAt: Date.now(),
       subTitle,
-      message
+      message,
     });
 
     toggleForm(false);
@@ -96,7 +96,7 @@ export default function NewPost({ onPostCreated }) {
   return (
     <Container>
       {form ? (
-        <Modal isOpen={form} backdrop={"static"}>
+        <Modal isOpen={form} backdrop="static">
           <Jumbotron>
             <h2>Cadastrar uma nova postagem</h2>
           </Jumbotron>
@@ -106,10 +106,10 @@ export default function NewPost({ onPostCreated }) {
                 <Label>Título *</Label>
                 <Input
                   type="text"
-                  required={true}
+                  required
                   invalid={invalid.title}
                   value={title}
-                  onChange={e => changeTitle(e.target.value)}
+                  onChange={(e) => changeTitle(e.target.value)}
                   placeholder="..."
                 />
               </FormGroup>
@@ -119,19 +119,19 @@ export default function NewPost({ onPostCreated }) {
                   type="text"
                   placeholder="..."
                   invalid={invalid.subTitle}
-                  required={true}
+                  required
                   value={subTitle}
-                  onChange={e => changeSubTitle(e.target.value)}
+                  onChange={(e) => changeSubTitle(e.target.value)}
                 />
               </FormGroup>
               <FormGroup>
                 <Label>Conteúdo *</Label>
                 <Input
                   type="textarea"
-                  required={true}
+                  required
                   invalid={invalid.message}
                   value={message}
-                  onChange={e => changeMessage(e.target.value)}
+                  onChange={(e) => changeMessage(e.target.value)}
                 />
               </FormGroup>
               <FormGroup>
@@ -140,9 +140,9 @@ export default function NewPost({ onPostCreated }) {
                   type="text"
                   placeholder="..."
                   invalid={invalid.author}
-                  required={true}
+                  required
                   value={author}
-                  onChange={e => changeAuthor(e.target.value)}
+                  onChange={(e) => changeAuthor(e.target.value)}
                 />
               </FormGroup>
               <FormGroup>
@@ -152,7 +152,7 @@ export default function NewPost({ onPostCreated }) {
                   placeholder="..."
                   invalid={invalid.avatar}
                   value={avatar}
-                  onChange={e => changeAvatar(e.target.value)}
+                  onChange={(e) => changeAvatar(e.target.value)}
                 />
               </FormGroup>
               <ButtonGroup>
