@@ -27,13 +27,13 @@ export default function Login({ history }) {
 
   useEffect(() => {
     if (logged) {
-      history.push("/feed");
+      history.push("/agenda");
     }
   }, [logged, history]);
 
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
-      history.push("/feed");
+      history.push("/agenda");
     }
   }, [history]);
 
