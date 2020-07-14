@@ -7,7 +7,8 @@ export const Options = styled.div`
   flex: 1;
   background: #c4c4c4;
   flex-direction: column;
-  padding: 5px;
+  align-items: flex-end;
+  width: 100%;
 `;
 
 export const Item = styled.div`
@@ -19,5 +20,5 @@ export const TextBold = styled.span`
 `;
 
 export const LinkTo = styled(Button)`
-  width: 100%;
+  width: 100px;
 `;

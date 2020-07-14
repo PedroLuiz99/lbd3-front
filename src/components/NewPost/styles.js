@@ -20,6 +20,7 @@ export const FormOpenned = styled.div`
 export const FormClosed = styled.div`
   display: flex;
   flex: 1;
+  width: 100%;
   justify-content: flex-end;
 `;
 

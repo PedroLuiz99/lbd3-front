@@ -4,6 +4,8 @@ export const LogoArea = styled.div`
   background: #404041;
   display: flex;
   height: 250px;
+  width: 100%;
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;
@@ -17,12 +19,14 @@ export const Options = styled.div`
 `;
 
 export const Container = styled.div`
+  margin: 0 20px;
   display: flex;
   flex: 1;
   background: #404041;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  padding: 20px 200px;
+  align-items: center;
+  padding: 0 10%;
 `;
 
 export const News = styled.div`
@@ -31,9 +35,8 @@ export const News = styled.div`
   flex-direction: column;
   background: black;
   padding: 10px;
-  margin: 0 20px;
-  border-radius: 3px;
   background: #c4c4c4;
+  width: 100%;
 `;
 
 export const UserArea = styled.div`
@@ -41,8 +44,8 @@ export const UserArea = styled.div`
   flex: 1;
   justify-content: center;
   flex-direction: column;
-  max-width: 300px;
   max-height: 900px;
+  width: 100%;
 `;
 export const Logo = styled.div``;
 

@@ -29,13 +29,13 @@ export default function Login({ history }) {
     if (logged) {
       history.push("/feed");
     }
-  }, [logged]);
+  }, [logged, history]);
 
   useEffect(() => {
-    if (localStorage.getItem("logged")) {
+    if (sessionStorage.getItem("token")) {
       history.push("/feed");
     }
-  }, []);
+  }, [history]);
 
   const login = async (e) => {
     e.preventDefault();
@@ -48,12 +48,12 @@ export default function Login({ history }) {
 
       if (response.data) {
         console.log(response.data);
+        sessionStorage.setItem("token", response.data.Authorization);
+        toggleLogged(true);
+        toggleWrong(false);
       }
-
-      // toggleLogged(true);
-      // toggleWrong(false);
     } catch (error) {
-      // toggleWrong(true);
+      toggleWrong(true);
     }
   };
 

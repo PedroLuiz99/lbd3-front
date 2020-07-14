@@ -8,28 +8,37 @@ import Post from "../Post";
 import MenuOffline from "../../components/MenuOffline";
 import MenuOnline from "../../components/MenuOnline";
 import NewPost from "../../components/NewPost";
+import api from "../../services/api";
 
 const data = [
   {
-    _id: 1,
-    postUrl: "./1",
-    author: "Clesley",
-    avatar:
-      "https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/07/21/10/avatar-neytiri.jpg",
-    title: `What is Lorem Ipsum?`,
-    createdAt: "2019-10-05T17:09:50.411Z",
-    subTitle:
+    event_id: 1,
+    user_id: "Clesley",
+    event_name: `What is Lorem Ipsum?`,
+    event_description:
       "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
-    message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`,
+    date_start: "2019-10-05T17:09:50.411Z",
+    date_end: "2019-10-05T17:09:50.411Z",
   },
 ];
 
 export default function Feed({ history }) {
   const [posts, setPosts] = useState([]);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
-    loadPosts();
-  }, []);
+    if (!sessionStorage.getItem("token")) {
+      history.push("/");
+    } else {
+      setToken(sessionStorage.getItem("token"));
+    }
+  }, [history]);
+
+  useEffect(() => {
+    if (token) {
+      loadCalendar();
+    }
+  }, [token]);
 
   const onPostCreated = (item) => {
     const newPosts = [...posts];
@@ -39,14 +48,17 @@ export default function Feed({ history }) {
     setPosts(newPosts);
   };
 
-  const loadPosts = async () => {
-    const payload = await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(data);
-      }, 100);
+  const loadCalendar = async () => {
+    console.log({ token });
+    const response = await api.get("/event", {
+      headers: {
+        Authorization: token,
+      },
     });
 
-    setPosts(payload);
+    console.log(response.data);
+
+    setPosts(data);
   };
 
   return (
@@ -54,25 +66,23 @@ export default function Feed({ history }) {
       <UserArea>
         <LogoArea>
           <Logo>
-            <img src={LogoInstitute} alt="Logotipo do Instituto " />
+            <img width="200" src={LogoInstitute} alt="Logotipo do Instituto " />
           </Logo>
         </LogoArea>
-        {localStorage.getItem("logged") ? (
-          <MenuOnline history={history} />
-        ) : (
-          <MenuOffline history={history}></MenuOffline>
-        )}
+        <MenuOnline history={history} />
       </UserArea>
       <News>
-        {localStorage.getItem("logged") && (
-          <NewPost onPostCreated={onPostCreated}></NewPost>
-        )}
-        {posts.length ? (
-          <Alert>Últimos {posts.length} posts encontrados.</Alert>
-        ) : null}
-        {posts.map((element, index) => (
-          <Post key={Date.now() + index} item={element}></Post>
-        ))}
+        <NewPost onPostCreated={onPostCreated}></NewPost>
+        <Schedule>
+          <Day>
+            <Event></Event>
+            <Event></Event>
+            <Event></Event>
+            <Event></Event>
+            <Event></Event>
+            <Event></Event>
+          </Day>
+        </Schedule>
       </News>
     </Container>
   );
