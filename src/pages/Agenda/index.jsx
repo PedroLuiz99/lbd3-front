@@ -5,45 +5,42 @@ import api from "../../services/api";
 import Header from "../../components/Header";
 
 import { Container, CardContainer, Card, TableContainer } from "./styles";
+import { useHistory } from "react-router-dom";
 
 const Dashboard = () => {
-  // const [transactions, setTransactions] = useState<Transaction[]>([]);
-  // const [balance, setBalance] = useState<Balance>({} as Balance);
+  const [events, setEvents] = useState([]);
+  const [token, setToken] = useState(null);
+  const history = useHistory();
+
+  console.log({ events });
 
   useEffect(() => {
-    async function loadTransactions() {
-      // TODO
+    const sessionToken = token || sessionStorage.getItem("token");
+
+    if (!sessionToken) {
+      return history.push("/");
     }
 
-    loadTransactions();
-  }, []);
+    if (!token) {
+      return setToken(sessionToken);
+    }
+  }, [token, history]);
 
-  // useEffect(() => {
-  //   if (!sessionStorage.getItem("token")) {
-  //     history.push("/");
-  //   } else {
-  //     setToken(sessionStorage.getItem("token"));
-  //   }
-  // }, [history]);
+  useEffect(() => {
+    if (token) {
+      loadEvents();
+    }
+  }, [token]);
 
-  // useEffect(() => {
-  //   if (token) {
-  //     loadCalendar();
-  //   }
-  // }, [token]);
+  const loadEvents = async () => {
+    const response = await api.get("/event", {
+      headers: {
+        Authorization: token,
+      },
+    });
 
-  // const loadCalendar = async () => {
-  //   console.log({ token });
-  //   const response = await api.get("/event", {
-  //     headers: {
-  //       Authorization: token,
-  //     },
-  //   });
-
-  //   console.log(response.data);
-
-  //   setEvent(data);
-  // };
+    setEvents(response.data.data);
+  };
 
   return (
     <>
