@@ -15,13 +15,14 @@ const LABEL_MONTHS = {
 
 function getFullDateInfo(dateStr) {
   const dateObject = new Date(dateStr);
+  const timeString = dateObject.toLocaleTimeString().replace(/:00\s/, " ");
 
   return {
     day: dateObject.getDate(),
     month: dateObject.getMonth(),
     month_label: LABEL_MONTHS[dateObject.getMonth()],
     year: dateObject.getFullYear(),
-    time_string: dateObject.toLocaleTimeString().replace(/:00\s/, " "),
+    time_string: (timeString.length === 7 && `0${timeString}`) || timeString,
     date: dateObject.toISOString(),
   };
 }
@@ -83,10 +84,12 @@ export default function parseEvents(response) {
   let events = {};
 
   for (const event of response) {
-    const startDate = getFullDateInfo(event.date_start);
-    const endDate = getFullDateInfo(event.date_end);
+    if (event.active) {
+      const startDate = getFullDateInfo(event.date_start);
+      const endDate = getFullDateInfo(event.date_end);
 
-    events = createEvent(event, events, startDate, endDate);
+      events = createEvent(event, events, startDate, endDate);
+    }
   }
 
   return events;

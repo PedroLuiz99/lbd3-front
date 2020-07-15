@@ -4,10 +4,16 @@ import Routes from "./routes";
 
 import GlobalStyle from "./styles/global";
 
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+
+import MomentUtils from "@date-io/moment";
+
 const App = () => (
   <>
-    <GlobalStyle />
-    <Routes />
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+      <GlobalStyle />
+      <Routes />
+    </MuiPickersUtilsProvider>
   </>
 );
 

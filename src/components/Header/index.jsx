@@ -4,7 +4,7 @@ import { Container } from "./styles";
 import Logo from "../../assets/logo.png";
 import { useHistory } from "react-router-dom";
 
-const Header = ({ size = "large" }) => {
+const Header = ({ size = "small" }) => {
   const history = useHistory();
 
   const logout = () => {

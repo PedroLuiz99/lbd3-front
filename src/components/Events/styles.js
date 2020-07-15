@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 export const TableContainer = styled.section`
-  margin-top: 64px;
+  div.month {
+    margin-bottom: 5vh;
+  }
 
   table {
     width: 100%;
@@ -14,14 +16,14 @@ export const TableContainer = styled.section`
     th {
       color: #969cb3;
       font-weight: normal;
-      padding: 20px 32px;
+      padding: 10px 16px;
       text-align: left;
       font-size: 16px;
       line-height: 24px;
     }
 
     td {
-      padding: 20px 32px;
+      padding: 10px 16px;
       border: 0;
       background: #fff;
       font-size: 16px;
@@ -51,6 +53,21 @@ export const TableContainer = styled.section`
 
     td:last-child {
       border-radius: 0 8px 8px 0;
+    }
+
+    a {
+      text-decoration: none;
+      font-size: 16px;
+      transition: opacity 0.2s;
+      cursor: pointer;
+
+      & + a {
+        margin-left: 32px;
+      }
+
+      &:hover {
+        opacity: 0.6;
+      }
     }
   }
 `;
