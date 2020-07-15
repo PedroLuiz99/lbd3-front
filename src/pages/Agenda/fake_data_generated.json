@@ -1,0 +1,105 @@
+{
+  "2019": {
+    "year": 2019,
+    "months": {
+      "11": {
+        "month": 11,
+        "month_label": "Dez",
+        "days": {
+          "1": {
+            "day": 1,
+            "events": [
+              {
+                "start_date": "2019-12-01T03:00:00.000Z",
+                "end_date": "2019-12-01T04:00:00.000Z",
+                "time_start": "12:00 AM",
+                "time_end": "1:00 AM",
+                "event_id": 5,
+                "user_id": 1,
+                "event_name": "event name",
+                "event_description": "event description event description event description event description event description event description event description event description ",
+                "active": ""
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "2020": {
+    "year": 2020,
+    "months": {
+      "0": {
+        "month": 0,
+        "month_label": "Jan",
+        "days": {
+          "1": {
+            "day": 1,
+            "events": [
+              {
+                "start_date": "2020-01-01T03:00:00.000Z",
+                "end_date": "2020-01-01T04:00:00.000Z",
+                "time_start": "12:00 AM",
+                "time_end": "1:00 AM",
+                "event_id": 1,
+                "user_id": 1,
+                "event_name": "event name",
+                "event_description": "event description event description event description event description event description event description event description event description ",
+                "active": ""
+              },
+              {
+                "start_date": "2020-01-01T05:00:00.000Z",
+                "end_date": "2020-01-01T06:00:00.000Z",
+                "time_start": "2:00 AM",
+                "time_end": "3:00 AM",
+                "event_id": 2,
+                "user_id": 1,
+                "event_name": "event name",
+                "event_description": "event description event description event description event description event description event description event description event description ",
+                "active": ""
+              }
+            ]
+          },
+          "2": {
+            "day": 2,
+            "events": [
+              {
+                "start_date": "2020-01-02T03:00:00.000Z",
+                "end_date": "2020-01-02T04:00:00.000Z",
+                "time_start": "12:00 AM",
+                "time_end": "1:00 AM",
+                "event_id": 3,
+                "user_id": 1,
+                "event_name": "event name",
+                "event_description": "event description event description event description event description event description event description event description event description ",
+                "active": ""
+              }
+            ]
+          }
+        }
+      },
+      "1": {
+        "month": 1,
+        "month_label": "Fev",
+        "days": {
+          "1": {
+            "day": 1,
+            "events": [
+              {
+                "start_date": "2020-02-01T03:00:00.000Z",
+                "end_date": "2020-02-01T04:00:00.000Z",
+                "time_start": "12:00 AM",
+                "time_end": "1:00 AM",
+                "event_id": 4,
+                "user_id": 1,
+                "event_name": "event name",
+                "event_description": "event description event description event description event description event description event description event description event description ",
+                "active": ""
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}

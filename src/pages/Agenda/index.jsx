@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import api from "../../services/api";
 
@@ -7,13 +7,14 @@ import Header from "../../components/Header";
 import { Container, CardContainer, Card, TableContainer } from "./styles";
 import { useHistory } from "react-router-dom";
 
-const Dashboard = () => {
-  const [events, setEvents] = useState([]);
+import fakeData from "./fake_data.json";
+import parseEvents from "../../services/api/parseEvents";
+
+const Agenda = () => {
+  const [responseData, setResponseData] = useState([]);
   const [token, setToken] = useState(null);
   const history = useHistory();
-
-  console.log({ events });
-
+  console.log("refresh");
   useEffect(() => {
     const sessionToken = token || sessionStorage.getItem("token");
 
@@ -32,6 +33,11 @@ const Dashboard = () => {
     }
   }, [token]);
 
+  const events = useMemo(
+    () => (responseData.length && parseEvents(responseData)) || [],
+    [responseData]
+  );
+
   const loadEvents = async () => {
     const response = await api.get("/event", {
       headers: {
@@ -39,7 +45,9 @@ const Dashboard = () => {
       },
     });
 
-    setEvents(response.data.data);
+    console.log(response);
+
+    setResponseData(fakeData);
   };
 
   return (
@@ -99,4 +107,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Agenda;
