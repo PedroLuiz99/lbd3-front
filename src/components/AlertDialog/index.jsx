@@ -14,8 +14,8 @@ export default function AlertDialog({
   handleAgree = () => {},
   handleDisagree = () => {},
   handleClose = () => {},
-  agreeButtonText = "Confirmar",
-  disagreeButtonText = "Cancelar",
+  agreeButtonText = "Yes",
+  disagreeButtonText = "No",
 }) {
   return (
     <Dialog

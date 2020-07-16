@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -7,12 +7,10 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
-import { DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
 import moment from "moment";
 
-export default function EditEventDialog({
+export default function CreateEventDialog({
   open,
-  event,
   handleAgree = () => {},
   handleDisagree = () => {},
   handleClose = () => {},
@@ -24,40 +22,17 @@ export default function EditEventDialog({
   const [endDate, setEndDate] = useState(null);
   const [startDate, setStartDate] = useState(null);
 
-  const resetStates = () => {
-    setEventName("");
-    setEventDescription("");
-    setEndDate(null);
-    setStartDate(null);
-  };
-
-  const eventToStates = (provided) => {
-    setEventName(provided.event_name || "");
-    setEventDescription(provided.event_description || "");
-    setEndDate(moment(provided.end_date));
-    setStartDate(moment(provided.start_date));
-  };
-
   const handleAgreeModal = async () => {
     const newEvent = {
       event_name: eventName,
       event_description: eventDescription,
       end_date: endDate.toISOString(),
       start_date: startDate.toISOString(),
-      id: event.event_id,
     };
 
     await handleAgree(null, newEvent);
     handleClose();
   };
-
-  useEffect(() => {
-    if (!event) {
-      return resetStates();
-    }
-
-    eventToStates(event);
-  }, [event]);
 
   return (
     <Dialog
@@ -66,11 +41,10 @@ export default function EditEventDialog({
       aria-labelledby="form-dialog-title"
       keepMounted={false}
     >
-      <DialogTitle id="form-dialog-title">Editing</DialogTitle>
+      <DialogTitle id="form-dialog-title">Creating</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          To edit an event, change the necessary info's and click after in
-          `save` button
+          To create an event, fill the fields and click after in `save` button
         </DialogContentText>
         <Grid container style={{ marginTop: 15 }}>
           <TextField
@@ -121,7 +95,7 @@ export default function EditEventDialog({
       <DialogActions>
         <Button
           onClick={async (e) => {
-            await handleDisagree(e, event);
+            await handleDisagree(e);
             handleClose();
           }}
           color="primary"

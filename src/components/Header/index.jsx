@@ -12,12 +12,17 @@ const Header = ({ size = "small" }) => {
     history.push("/");
   };
 
+  const newEvent = () => {
+    alert("novo evento");
+  };
+
   return (
     <Container size={size}>
       <header>
         <img height="100px" src={Logo} />
         <nav>
-          <a onClick={logout}>Sair</a>
+          <a onClick={newEvent}>New event</a>
+          <a onClick={logout}>Logout</a>
         </nav>
       </header>
     </Container>

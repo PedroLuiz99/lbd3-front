@@ -39,7 +39,28 @@ const Events = ({ events, token, refreshList }) => {
   };
 
   const handleEditEvent = async (_, event) => {
-    console.log(event);
+    try {
+      console.log(event);
+      await api.put(
+        `/event/${event.id}`,
+        {
+          event_name: event.event_name,
+          event_description: event.event_description,
+          date_start: event.start_date,
+          date_end: event.end_date,
+          active: true,
+        },
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+    } catch (err) {
+      console.error(err, err.response);
+    } finally {
+      refreshList();
+    }
   };
 
   const openEditModal = (event) => () => {
@@ -59,10 +80,10 @@ const Events = ({ events, token, refreshList }) => {
       <AlertDialog
         open={deleteModal}
         customValues={{ id: deleteEventSelected }}
-        title="Deseja excluir o evento?"
+        title="Do you want delete this event?"
         handleClose={handleCloseModal}
         handleAgree={handleDeleteEvent}
-        description="Uma vez excluído, será necessário criar um outro evento idêntico."
+        description="One time deleted, you have to create a new event to 'restore' it."
       />
       <EditEventDialog
         open={editModal}
@@ -83,7 +104,7 @@ const Events = ({ events, token, refreshList }) => {
                   <table>
                     <thead>
                       <tr>
-                        <th colSpan="4">Dia {day.day}</th>
+                        <th colSpan="4">Day {day.day}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -94,9 +115,9 @@ const Events = ({ events, token, refreshList }) => {
                           </td>
                           <td className="title">{event.event_name}</td>
                           <td align="right">
-                            <a onClick={openEditModal(event)}>Editar</a>
+                            <a onClick={openEditModal(event)}>Edit</a>
                             <a onClick={openDeleteModal(event.event_id)}>
-                              Excluir
+                              Delete
                             </a>
                           </td>
                         </tr>
