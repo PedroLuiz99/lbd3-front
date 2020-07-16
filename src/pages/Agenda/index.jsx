@@ -8,11 +8,12 @@ import { Container, CardContainer, Card } from "./styles";
 import { useHistory } from "react-router-dom";
 
 import fakeData from "./fake_data.json";
-import parseEvents from "../../services/api/parseEvents";
+import parseEvents from "../../services/parseEvents";
 import Events from "../../components/Events";
 
 const Agenda = () => {
   const [responseData, setResponseData] = useState([]);
+  const [lastUpdate, setLastUpdate] = useState(Date.now());
   const [token, setToken] = useState(null);
   const history = useHistory();
 
@@ -28,12 +29,6 @@ const Agenda = () => {
     }
   }, [token, history]);
 
-  useEffect(() => {
-    if (token) {
-      loadEvents();
-    }
-  }, [token]);
-
   const events = useMemo(
     () => (responseData.length && parseEvents(responseData)) || {},
     [responseData]
@@ -47,18 +42,24 @@ const Agenda = () => {
         },
       });
 
-      console.log(response);
+      // console.log(response);
 
-      setResponseData(fakeData);
+      setResponseData(response.data.data);
     } catch (err) {
       console.error(err, err.response);
       setResponseData([]);
     }
   };
 
+  useEffect(() => {
+    if (token && lastUpdate) {
+      loadEvents();
+    }
+  }, [lastUpdate, token]);
+
   return (
     <>
-      <Header />
+      <Header token={token} setLastUpdate={setLastUpdate} />
       <Container>
         <Events events={events} token={token} refreshList={loadEvents} />
       </Container>

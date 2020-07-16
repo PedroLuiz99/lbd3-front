@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -8,6 +8,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
 import moment from "moment";
+import { parseToSQL } from "../../services/parseDate";
 
 export default function CreateEventDialog({
   open,
@@ -23,16 +24,29 @@ export default function CreateEventDialog({
   const [startDate, setStartDate] = useState(null);
 
   const handleAgreeModal = async () => {
-    const newEvent = {
-      event_name: eventName,
-      event_description: eventDescription,
-      end_date: endDate.toISOString(),
-      start_date: startDate.toISOString(),
-    };
+    try {
+      const newEvent = {
+        event_name: eventName,
+        event_description: eventDescription,
+        end_date: parseToSQL(endDate.toISOString()),
+        start_date: parseToSQL(startDate.toISOString()),
+      };
 
-    await handleAgree(null, newEvent);
-    handleClose();
+      await handleAgree(null, newEvent);
+      handleClose();
+    } catch (error) {
+      console.warn(error);
+    }
   };
+
+  useEffect(() => {
+    if (!open) {
+      setEventName("");
+      setEventDescription("");
+      setEndDate(null);
+      setStartDate(null);
+    }
+  }, [open]);
 
   return (
     <Dialog

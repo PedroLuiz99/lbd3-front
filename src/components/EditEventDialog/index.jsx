@@ -9,6 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
 import { DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
 import moment from "moment";
+import { parseToSQL } from "../../services/parseDate";
 
 export default function EditEventDialog({
   open,
@@ -39,16 +40,20 @@ export default function EditEventDialog({
   };
 
   const handleAgreeModal = async () => {
-    const newEvent = {
-      event_name: eventName,
-      event_description: eventDescription,
-      end_date: endDate.toISOString(),
-      start_date: startDate.toISOString(),
-      id: event.event_id,
-    };
+    try {
+      const newEvent = {
+        event_name: eventName,
+        event_description: eventDescription,
+        end_date: parseToSQL(endDate.toISOString()),
+        start_date: parseToSQL(startDate.toISOString()),
+        id: event.event_id,
+      };
 
-    await handleAgree(null, newEvent);
-    handleClose();
+      await handleAgree(null, newEvent);
+      handleClose();
+    } catch (error) {
+      console.warn(error);
+    }
   };
 
   useEffect(() => {
