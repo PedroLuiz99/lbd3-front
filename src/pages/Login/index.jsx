@@ -9,6 +9,7 @@ import api from "../../services/api";
 
 import CardContent from "@material-ui/core/CardContent";
 import Card from "@material-ui/core/Card";
+import { useToasts } from "react-toast-notifications";
 
 import {
   FormGroup,
@@ -26,6 +27,8 @@ export default function Login({ history }) {
   const [modal, setModal] = useState(false);
   const [wrong, toggleWrong] = useState(false);
   const [logged, toggleLogged] = useState(false);
+
+  const { addToast } = useToasts();
 
   useEffect(() => {
     if (logged) {
@@ -49,12 +52,15 @@ export default function Login({ history }) {
       });
 
       if (response.data) {
-        console.log(response.data);
         sessionStorage.setItem("token", response.data.Authorization);
         toggleLogged(true);
         toggleWrong(false);
       }
     } catch (error) {
+      addToast("The provided credentials are wrong", {
+        appearance: "error",
+        autoDismiss: true,
+      });
       toggleWrong(true);
     }
   };
@@ -74,7 +80,6 @@ export default function Login({ history }) {
         </CardHeader>
         <CardContent>
           <Form>
-            {wrong && <Alert color="danger">Login or password is wrong.</Alert>}
             <FormGroup>
               <Label for="exampleLogin">Login</Label>
               <Input

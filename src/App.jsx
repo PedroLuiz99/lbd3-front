@@ -8,12 +8,16 @@ import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 import MomentUtils from "@date-io/moment";
 
+import { ToastProvider } from "react-toast-notifications";
+
 const App = () => (
   <>
-    <MuiPickersUtilsProvider utils={MomentUtils}>
-      <GlobalStyle />
-      <Routes />
-    </MuiPickersUtilsProvider>
+    <ToastProvider autoDismiss>
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <GlobalStyle />
+        <Routes />
+      </MuiPickersUtilsProvider>
+    </ToastProvider>
   </>
 );
 

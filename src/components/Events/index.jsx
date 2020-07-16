@@ -5,6 +5,7 @@ import AlertDialog from "../AlertDialog";
 
 import api from "../../services/api";
 import EditEventDialog from "../EditEventDialog";
+import { useToasts } from "react-toast-notifications";
 
 const Events = ({ events, token, refreshList }) => {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -12,6 +13,8 @@ const Events = ({ events, token, refreshList }) => {
 
   const [deleteEventSelected, setDeleteEventSelected] = useState(null);
   const [editEventSelected, setEditEventSelected] = useState(null);
+
+  const { addToast } = useToasts();
 
   if (!events || !Object.keys(events).length) {
     return null;
@@ -31,8 +34,16 @@ const Events = ({ events, token, refreshList }) => {
           Authorization: token,
         },
       });
+      addToast("Ok... Your event has been deleted!", {
+        appearance: "success",
+        autoDismiss: true,
+      });
     } catch (err) {
       console.error(err, err.response);
+      addToast("Something went wrong, try again later", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     } finally {
       refreshList();
     }
@@ -56,8 +67,16 @@ const Events = ({ events, token, refreshList }) => {
           },
         }
       );
+      addToast("Cool! Your event has been successfully edited!", {
+        appearance: "success",
+        autoDismiss: true,
+      });
     } catch (err) {
       console.error(err, err.response);
+      addToast("Something went wrong, try again later", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     } finally {
       refreshList();
     }

@@ -10,6 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import { DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
 import moment from "moment";
 import { parseToSQL } from "../../services/parseDate";
+import { useToasts } from "react-toast-notifications";
 
 export default function EditEventDialog({
   open,
@@ -24,6 +25,8 @@ export default function EditEventDialog({
   const [eventDescription, setEventDescription] = useState("");
   const [endDate, setEndDate] = useState(moment());
   const [startDate, setStartDate] = useState(moment());
+
+  const { addToast } = useToasts();
 
   const resetStates = () => {
     setEventName("");
@@ -48,6 +51,13 @@ export default function EditEventDialog({
         start_date: parseToSQL(startDate.toISOString()),
         id: event.event_id,
       };
+
+      if (!newEvent.event_name || !newEvent.event_description) {
+        return addToast("Please, complete all required fields", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      }
 
       await handleAgree(null, newEvent);
       handleClose();

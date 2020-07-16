@@ -12,11 +12,13 @@ import {
   DialogActions,
   Button,
 } from "@material-ui/core";
+import { useToasts } from "react-toast-notifications";
 
 export default function NewUser({ modal: form, toggleModal: toggleForm }) {
   const [mail, setMail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const { addToast } = useToasts();
 
   const [invalid, setInvalid] = useState({
     mail: false,
@@ -43,9 +45,11 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
     errors.name = !name;
     errors.password = !password;
 
-    console.log(errors);
-
     if (errors.mail || errors.name || errors.password) {
+      addToast("Please, complete all required fields", {
+        appearance: "error",
+        autoDismiss: true,
+      });
       return setInvalid(errors);
     }
 
@@ -59,8 +63,17 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
       console.log(response.data);
 
       toggleForm(false);
+
+      addToast("Nice! Your user has been created!", {
+        appearance: "success",
+        autoDismiss: true,
+      });
     } catch (error) {
       console.log(error, error.response);
+      addToast("Something went wrong, try again later", {
+        appearance: "error",
+        autoDismiss: true,
+      });
     }
   };
 

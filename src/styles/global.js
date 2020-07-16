@@ -25,4 +25,8 @@ export default createGlobalStyle`
     width: 100%;
     height: 100%;
   }
+
+  .react-toast-notifications__container{
+    z-index: 99999!important
+  }
 `;

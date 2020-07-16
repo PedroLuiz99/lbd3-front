@@ -9,6 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
 import moment from "moment";
 import { parseToSQL } from "../../services/parseDate";
+import { useToasts } from "react-toast-notifications";
 
 export default function CreateEventDialog({
   open,
@@ -23,6 +24,8 @@ export default function CreateEventDialog({
   const [endDate, setEndDate] = useState(moment());
   const [startDate, setStartDate] = useState(moment());
 
+  const { addToast } = useToasts();
+
   const handleAgreeModal = async () => {
     try {
       const newEvent = {
@@ -31,6 +34,13 @@ export default function CreateEventDialog({
         end_date: parseToSQL(endDate.toISOString()),
         start_date: parseToSQL(startDate.toISOString()),
       };
+
+      if (!newEvent.event_name || !newEvent.event_description) {
+        return addToast("Please, complete all required fields", {
+          appearance: "error",
+          autoDismiss: true,
+        });
+      }
 
       await handleAgree(null, newEvent);
       handleClose();

@@ -5,10 +5,12 @@ import Logo from "../../assets/logo.png";
 import { useHistory } from "react-router-dom";
 import CreateEventDialog from "../CreateEventDialog";
 import api from "../../services/api";
+import { useToasts } from "react-toast-notifications";
 
 const Header = ({ size = "small", token, setLastUpdate }) => {
   const history = useHistory();
   const [modal, setModal] = useState(false);
+  const { addToast } = useToasts();
 
   const logout = () => {
     sessionStorage.clear();
@@ -40,8 +42,16 @@ const Header = ({ size = "small", token, setLastUpdate }) => {
           },
         }
       );
+      addToast("Awesome! Your event has been created!", {
+        appearance: "success",
+        autoDismiss: true,
+      });
     } catch (err) {
       console.error(err, err.response);
+      addToast("Something went wrong, try again later", {
+        appearance: "error",
+        autoDismiss: true,
+      });
       throw err;
     } finally {
       setLastUpdate(Date.now());
