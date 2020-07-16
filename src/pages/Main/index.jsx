@@ -5,7 +5,7 @@ export default function Main({ history }) {
     // const logged = localStorage.getItem("logged");
 
     history.push("/login");
-  }, []);
+  }, [history]);
 
   return <div />;
 }

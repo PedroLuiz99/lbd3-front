@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 import { Form, FormGroup, Label, Input } from "reactstrap";
 
-import { Modal, FormOpenned } from "./styles";
 import api from "../../services/api";
 import {
   Dialog,
@@ -30,6 +29,11 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
     setMail("");
     setName("");
     setPassword("");
+    setInvalid({
+      mail: false,
+      name: false,
+      password: false,
+    });
   };
 
   useEffect(() => {
@@ -69,8 +73,16 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
         autoDismiss: true,
       });
     } catch (error) {
-      console.log(error, error.response);
-      addToast("Something went wrong, try again later", {
+      let message = "Something went wrong, try again later";
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        message = error.response.data.message;
+      }
+
+      addToast(message, {
         appearance: "error",
         autoDismiss: true,
       });

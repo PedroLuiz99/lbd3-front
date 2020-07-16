@@ -7,7 +7,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Grid from "@material-ui/core/Grid";
-import { DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
 import moment from "moment";
 import { parseToSQL } from "../../services/parseDate";
 import { useToasts } from "react-toast-notifications";
@@ -36,6 +35,11 @@ export default function EditEventDialog({
   };
 
   const eventToStates = (provided) => {
+    console.log(
+      provided.end_date,
+      moment(provided.end_date),
+      moment.utc(provided.end_date)
+    );
     setEventName(provided.event_name || "");
     setEventDescription(provided.event_description || "");
     setEndDate(moment(provided.end_date));
@@ -102,7 +106,7 @@ export default function EditEventDialog({
         <Grid container style={{ marginTop: 15 }}>
           <TextField
             id="standard-multiline-static"
-            label="Multiline"
+            label="Event description"
             multiline
             fullWidth
             rows={4}
@@ -116,7 +120,10 @@ export default function EditEventDialog({
             label="Start date"
             type="datetime-local"
             value={
-              (startDate && startDate.toISOString().substring(0, 16)) || ""
+              (startDate &&
+                startDate.toISOString() &&
+                startDate.toISOString().substring(0, 16)) ||
+              ""
             }
             onChange={(e) => {
               setStartDate(moment.utc(e.target.value));
@@ -128,7 +135,12 @@ export default function EditEventDialog({
             id="datetime-local"
             label="End date"
             type="datetime-local"
-            value={(endDate && endDate.toISOString().substring(0, 16)) || ""}
+            value={
+              (endDate &&
+                endDate.toISOString() &&
+                endDate.toISOString().substring(0, 16)) ||
+              ""
+            }
             onChange={(e) => setEndDate(moment.utc(e.target.value))}
           />
         </Grid>

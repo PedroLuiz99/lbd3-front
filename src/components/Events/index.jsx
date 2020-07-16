@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { TableContainer } from "./styles";
 import AlertDialog from "../AlertDialog";
@@ -77,6 +77,7 @@ const Events = ({ events, token, refreshList }) => {
         appearance: "error",
         autoDismiss: true,
       });
+      throw err;
     } finally {
       refreshList();
     }
@@ -134,8 +135,13 @@ const Events = ({ events, token, refreshList }) => {
                           </td>
                           <td className="title">{event.event_name}</td>
                           <td align="right">
-                            <a onClick={openEditModal(event)}>Edit</a>
-                            <a onClick={openDeleteModal(event.event_id)}>
+                            <a href="#_" onClick={openEditModal(event)}>
+                              Edit
+                            </a>
+                            <a
+                              href="#_"
+                              onClick={openDeleteModal(event.event_id)}
+                            >
                               Delete
                             </a>
                           </td>

@@ -1,28 +1,29 @@
+import moment from "moment";
+
 const LABEL_MONTHS = {
-  0: "Jan",
-  1: "Feb",
-  2: "Mar",
-  3: "Apr",
-  4: "May",
-  5: "Jun",
-  6: "Jul",
-  7: "Aug",
-  8: "Sep",
-  9: "Oct",
-  10: "Nov",
-  11: "Dec",
+  1: "Jan",
+  2: "Feb",
+  3: "Mar",
+  4: "Apr",
+  5: "May",
+  6: "Jun",
+  7: "Jul",
+  8: "Aug",
+  9: "Sep",
+  10: "Oct",
+  11: "Nov",
+  12: "Dec",
 };
 
 function getFullDateInfo(dateStr) {
-  const dateObject = new Date(dateStr);
-  const timeString = dateObject.toLocaleTimeString().replace(/:00\s/, " ");
+  const dateObject = moment.utc(dateStr);
 
   return {
-    day: dateObject.getDate(),
-    month: dateObject.getMonth(),
-    month_label: LABEL_MONTHS[dateObject.getMonth()],
-    year: dateObject.getFullYear(),
-    time_string: (timeString.length === 7 && `0${timeString}`) || timeString,
+    day: parseInt(dateObject.format("D"), 10),
+    month: parseInt(dateObject.format("M"), 10),
+    month_label: LABEL_MONTHS[dateObject.format("M")],
+    year: dateObject.format("YYYY"),
+    time_string: dateObject.format("HH:mm"),
     date: dateObject.toISOString(),
   };
 }
@@ -91,6 +92,8 @@ export default function parseEvents(response) {
       events = createEvent(event, events, startDate, endDate);
     }
   }
+
+  console.log(events);
 
   return events;
 }

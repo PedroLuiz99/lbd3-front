@@ -85,7 +85,7 @@ export default function CreateEventDialog({
         <Grid container style={{ marginTop: 15 }}>
           <TextField
             id="standard-multiline-static"
-            label="Multiline"
+            label="Event description"
             multiline
             fullWidth
             rows={4}
@@ -99,7 +99,10 @@ export default function CreateEventDialog({
             label="Start date"
             type="datetime-local"
             value={
-              (startDate && startDate.toISOString().substring(0, 16)) || ""
+              (startDate &&
+                startDate.toISOString() &&
+                startDate.toISOString().substring(0, 16)) ||
+              ""
             }
             onChange={(e) => {
               setStartDate(moment.utc(e.target.value));
@@ -111,7 +114,12 @@ export default function CreateEventDialog({
             id="datetime-local"
             label="End date"
             type="datetime-local"
-            value={(endDate && endDate.toISOString().substring(0, 16)) || ""}
+            value={
+              (endDate &&
+                endDate.toISOString() &&
+                endDate.toISOString().substring(0, 16)) ||
+              ""
+            }
             onChange={(e) => setEndDate(moment.utc(e.target.value))}
           />
         </Grid>

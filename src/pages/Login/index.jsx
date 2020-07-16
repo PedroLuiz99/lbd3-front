@@ -17,7 +17,6 @@ import {
   CardHeader,
   Input,
   Form,
-  Alert,
   ButtonGroup,
 } from "reactstrap";
 
@@ -25,7 +24,7 @@ export default function Login({ history }) {
   const [username, changeUsername] = useState("");
   const [password, changePassword] = useState("");
   const [modal, setModal] = useState(false);
-  const [wrong, toggleWrong] = useState(false);
+  const [, toggleWrong] = useState(false);
   const [logged, toggleLogged] = useState(false);
 
   const { addToast } = useToasts();

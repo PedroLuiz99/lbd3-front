@@ -48,7 +48,9 @@ const Header = ({ size = "small", token, setLastUpdate }) => {
       });
     } catch (err) {
       console.error(err, err.response);
-      addToast("Something went wrong, try again later", {
+      const message = "Your event is overlaping other event";
+
+      addToast(message, {
         appearance: "error",
         autoDismiss: true,
       });
@@ -66,10 +68,14 @@ const Header = ({ size = "small", token, setLastUpdate }) => {
         handleAgree={hnadleCreateModal}
       />
       <header>
-        <img height="100px" src={Logo} />
+        <img height="100px" src={Logo} alt="foda-se" />
         <nav>
-          <a onClick={newEvent}>New event</a>
-          <a onClick={logout}>Logout</a>
+          <a href="#_" onClick={newEvent}>
+            New event
+          </a>
+          <a href="#_" onClick={logout}>
+            Logout
+          </a>
         </nav>
       </header>
     </Container>

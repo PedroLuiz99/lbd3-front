@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 
 import api from "../../services/api";
 
 import Header from "../../components/Header";
 
-import { Container, CardContainer, Card } from "./styles";
+import { Container, Title } from "./styles";
 import { useHistory } from "react-router-dom";
 
-import fakeData from "./fake_data.json";
 import parseEvents from "../../services/parseEvents";
 import Events from "../../components/Events";
 
@@ -34,7 +33,7 @@ const Agenda = () => {
     [responseData]
   );
 
-  const loadEvents = async () => {
+  const loadEvents = useCallback(async () => {
     try {
       const response = await api.get("/event", {
         headers: {
@@ -49,19 +48,30 @@ const Agenda = () => {
       console.error(err, err.response);
       setResponseData([]);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     if (token && lastUpdate) {
       loadEvents();
     }
-  }, [lastUpdate, token]);
+  }, [lastUpdate, token, loadEvents]);
 
   return (
     <>
       <Header token={token} setLastUpdate={setLastUpdate} />
       <Container>
-        <Events events={events} token={token} refreshList={loadEvents} />
+        {responseData.length ? (
+          <Events events={events} token={token} refreshList={loadEvents} />
+        ) : (
+          <>
+            <Title>Sorry, we have no events to you :(</Title>
+            <br></br>
+            <Title>
+              But, you can create one by clicking on top menu button called by
+              `new event`!
+            </Title>
+          </>
+        )}
       </Container>
     </>
   );
