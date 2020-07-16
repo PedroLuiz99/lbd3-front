@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  Jumbotron,
-  ButtonGroup,
-} from "reactstrap";
+import { Form, FormGroup, Label, Input } from "reactstrap";
 
 import { Modal, FormOpenned } from "./styles";
 import api from "../../services/api";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Button,
+} from "@material-ui/core";
 
 export default function NewUser({ modal: form, toggleModal: toggleForm }) {
   const [mail, setMail] = useState("");
@@ -34,7 +34,7 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
     reset();
   }, [form]);
 
-  const createUser = (e) => {
+  const createUser = async (e) => {
     e.preventDefault();
 
     const errors = { ...invalid };
@@ -50,7 +50,7 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
     }
 
     try {
-      const response = api.post("/user", {
+      const response = await api.post("/user", {
         email: mail,
         full_name: name,
         password,
@@ -58,20 +58,26 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
 
       console.log(response.data);
 
-      if (response.statusCode === 201) {
-        toggleForm(false);
-      }
+      toggleForm(false);
     } catch (error) {
       console.log(error, error.response);
     }
   };
 
   return (
-    <Modal isOpen={form} backdrop="static">
-      <Jumbotron>
-        <h2>Novo usuário</h2>
-      </Jumbotron>
-      <FormOpenned>
+    <Dialog
+      open={form}
+      onClose={() => {}}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+      keepMounted={false}
+    >
+      <DialogTitle id="alert-dialog-title">New user</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Please, to register a new user, just fill up all requireds fields
+          below and click on the "save" button
+        </DialogContentText>
         <Form>
           <FormGroup>
             <Label>E-mail *</Label>
@@ -85,7 +91,7 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
             />
           </FormGroup>
           <FormGroup>
-            <Label>Nome *</Label>
+            <Label>Name *</Label>
             <Input
               type="text"
               required
@@ -96,7 +102,7 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
             />
           </FormGroup>
           <FormGroup>
-            <Label>Senha *</Label>
+            <Label>Password *</Label>
             <Input
               type="password"
               required
@@ -106,16 +112,16 @@ export default function NewUser({ modal: form, toggleModal: toggleForm }) {
               placeholder="*********"
             />
           </FormGroup>
-          <ButtonGroup>
-            <Button onClick={createUser} color="warning" type="button">
-              Cadastrar
-            </Button>
-            <Button onClick={() => toggleForm(false)} color="danger">
-              Cancelar
-            </Button>
-          </ButtonGroup>
         </Form>
-      </FormOpenned>
-    </Modal>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={() => toggleForm(false)} color="primary">
+          Cancel
+        </Button>
+        <Button onClick={createUser} color="primary">
+          Save
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }

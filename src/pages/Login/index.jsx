@@ -74,7 +74,7 @@ export default function Login({ history }) {
         </CardHeader>
         <CardContent>
           <Form>
-            {wrong && <Alert color="danger">Usuário ou senha inválidos.</Alert>}
+            {wrong && <Alert color="danger">Login or password is wrong.</Alert>}
             <FormGroup>
               <Label for="exampleLogin">Login</Label>
               <Input
@@ -86,7 +86,7 @@ export default function Login({ history }) {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="examplePassword">Senha</Label>
+              <Label for="examplePassword">Password</Label>
               <Input
                 type="password"
                 name="password"
@@ -98,10 +98,10 @@ export default function Login({ history }) {
             <SubmitArea>
               <ButtonGroup>
                 <Submit type="submit" onClick={login} color="warning">
-                  Entrar
+                  Login
                 </Submit>
                 <Submit type="button" onClick={toggleModal} color="secondary">
-                  Cadastrar
+                  Register
                 </Submit>
               </ButtonGroup>
             </SubmitArea>

@@ -22,14 +22,14 @@ export default function EditEventDialog({
 }) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [endDate, setEndDate] = useState(null);
-  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(moment());
+  const [startDate, setStartDate] = useState(moment());
 
   const resetStates = () => {
     setEventName("");
     setEventDescription("");
-    setEndDate(null);
-    setStartDate(null);
+    setEndDate(moment());
+    setStartDate(moment());
   };
 
   const eventToStates = (provided) => {

@@ -20,8 +20,8 @@ export default function CreateEventDialog({
 }) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [endDate, setEndDate] = useState(null);
-  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(moment());
+  const [startDate, setStartDate] = useState(moment());
 
   const handleAgreeModal = async () => {
     try {
@@ -43,8 +43,8 @@ export default function CreateEventDialog({
     if (!open) {
       setEventName("");
       setEventDescription("");
-      setEndDate(null);
-      setStartDate(null);
+      setEndDate(moment());
+      setStartDate(moment());
     }
   }, [open]);
 
