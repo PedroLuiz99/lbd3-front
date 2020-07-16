@@ -23,7 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy-and-be-happy": "yarn build && yarn serve -s build",
+    "deploy-and-be-happy-npm": "yarn build && yarn serve -s build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -40,6 +42,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
-    "eslint-plugin-react-hooks": "^4.0.7"
+    "eslint-plugin-react-hooks": "^4.0.7",
+    "serve": "^11.3.2"
   }
 }
