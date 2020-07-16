@@ -2,19 +2,13 @@ import styled from "styled-components";
 import { Button } from "reactstrap";
 
 export const Container = styled.div`
+  margin: 0 auto;
+  padding: 40px 20px;
   display: flex;
   flex: 1;
-  background: #404041;
-  height: 100%;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
-`;
-
-export const Card = styled.div`
-  width: 500px;
-  background: #c4c4c4;
-  border-radius: 5px;
+  align-items: center;
+  height: 100%;
 `;
 
 export const LogoArea = styled.div`

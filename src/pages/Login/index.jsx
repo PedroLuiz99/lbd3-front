@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 
-import { Container, Card, Submit, LogoArea, SubmitArea } from "./styles";
+import { Container, Submit, LogoArea, SubmitArea } from "./styles";
 
 import Logo from "../../assets/logo.png";
 import NewUser from "../../components/NewUser";
 
 import api from "../../services/api";
 
+import CardContent from "@material-ui/core/CardContent";
+import Card from "@material-ui/core/Card";
+
 import {
-  CardBody,
   FormGroup,
   Label,
   CardHeader,
@@ -62,54 +64,50 @@ export default function Login({ history }) {
   };
 
   return (
-    <>
+    <Container>
       <NewUser modal={modal} toggleModal={toggleModal}></NewUser>
-      <Container>
-        <Card>
-          <CardHeader>
-            <LogoArea>
-              <img src={Logo} width="100px" alt="Logotipo do Instituto" />
-            </LogoArea>
-          </CardHeader>
-          <CardBody>
-            <Form>
-              {wrong && (
-                <Alert color="danger">Usuário ou senha inválidos.</Alert>
-              )}
-              <FormGroup>
-                <Label for="exampleLogin">Login</Label>
-                <Input
-                  type="login"
-                  name="login"
-                  value={username}
-                  onChange={(e) => changeUsername(e.target.value)}
-                  placeholder="exemplo@exemplo.com.br"
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="examplePassword">Senha</Label>
-                <Input
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={(e) => changePassword(e.target.value)}
-                  placeholder="******************"
-                />
-              </FormGroup>
-              <SubmitArea>
-                <ButtonGroup>
-                  <Submit type="submit" onClick={login} color="warning">
-                    Entrar
-                  </Submit>
-                  <Submit type="button" onClick={toggleModal} color="secondary">
-                    Cadastrar
-                  </Submit>
-                </ButtonGroup>
-              </SubmitArea>
-            </Form>
-          </CardBody>
-        </Card>
-      </Container>
-    </>
+      <Card style={{ width: "25vw" }}>
+        <CardHeader>
+          <LogoArea>
+            <img src={Logo} width="100px" alt="Logotipo do Instituto" />
+          </LogoArea>
+        </CardHeader>
+        <CardContent>
+          <Form>
+            {wrong && <Alert color="danger">Usuário ou senha inválidos.</Alert>}
+            <FormGroup>
+              <Label for="exampleLogin">Login</Label>
+              <Input
+                type="login"
+                name="login"
+                value={username}
+                onChange={(e) => changeUsername(e.target.value)}
+                placeholder="exemplo@exemplo.com.br"
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="examplePassword">Senha</Label>
+              <Input
+                type="password"
+                name="password"
+                value={password}
+                onChange={(e) => changePassword(e.target.value)}
+                placeholder="******************"
+              />
+            </FormGroup>
+            <SubmitArea>
+              <ButtonGroup>
+                <Submit type="submit" onClick={login} color="warning">
+                  Entrar
+                </Submit>
+                <Submit type="button" onClick={toggleModal} color="secondary">
+                  Cadastrar
+                </Submit>
+              </ButtonGroup>
+            </SubmitArea>
+          </Form>
+        </CardContent>
+      </Card>
+    </Container>
   );
 }
